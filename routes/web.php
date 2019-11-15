@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Route::get('/inventory', 'InventoryController@index');
 
+Route::get('/word', 'ReportsController@word');
 
+Route::get('/excel', 'ReportsController@excel');
