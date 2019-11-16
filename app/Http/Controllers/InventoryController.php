@@ -9,51 +9,33 @@ class InventoryController extends Controller
 {
     public function index()
     {
-    	$inventory = Inventory::all();
-    	return view('inventory.index')->with('inventory', $inventory);
+        $inventory = Inventory::first();
+        $items = Items::all();
+        return view('items.index', compact('items', 'inventory'));
     }
 
-    public function create()
+    public function create(Inventory $inventory)
     {
-    	return view('inventory.create');
+        $inventory = Inventory::first();
+        $items = Task::all();
+        return view('items.create', compact('items', 'project'));
     }
 
-    public function store()
+    public function store(Inventory $inventory)
     {
-        request()->validate([
-            'id' => 'required',
-            'name' => 'required',
-            'quantity' => 'required',
-            'category' => 'required'
-        ]);
-
-        $inventory = Inventory::create([
+        $item = $inventory->items()->create([
             'id' => request()->id,
             'name' => request()->name,
             'quantity' => request()->quantity,
             'category' => request()->category
         ]);
-
-    	return redirect('/inventory');
-    }
-    
-    public function show(Inventory $inventory)
-    {
-    	return view('inventory.show')->with('inventory', $inventory);
-    }
-    
-    public function edit(Inventory $inventory)
-    {
-        return view('inventory.edit')->with('inventory', $inventory);
+        return $item;
     }
 
-    public function update(Inventory $inventory)
+    public function delete(Item $item)
     {
-        $inventory->id = request()->id;
-        $inventory->name = request()->name;
-        $inventory->quantity = request()->quantity;
-        $inventory->category = request()->category;
-        $inventory->save();
-        return redirect('/inventory');
-    }
+        //delete the task
+        $item->delete();
+        return "Item was deleted successfully";
+    }   
 }

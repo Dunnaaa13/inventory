@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+
 <div class="container" id ='app'>
 @extends('layouts.master')
 @section('content')
@@ -6,12 +9,27 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">ID</th>
-					<th scope="col">Name</th>
-					<th scope="col">Quantity</th>
-					<th scope="col">Category</th>
-					<th scope="col">Actions</th>
+					<th v-for="column in columns">{{column.name}}</th>
 				</tr>
 			</thead>
 		</table>
 @endsection
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+          columns:[
+            {name: 'ID' },
+            {name: 'NAME' },
+            {name: 'QUANTITY' },
+            {name: 'CATEGORY' },
+            {name: 'ACTIONS' }
+            ],
+        },
+    })
+</script>
+</body>
