@@ -1,5 +1,4 @@
-@extends('layouts.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 </style>
 	<div class="container">
@@ -15,16 +14,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($equipments as $equipment)
+				<?php $__currentLoopData = $equipments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $equipment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<tr>
-						<td>{{ $equipment->id }}</td>
-						<td>{{ $equipment->name }}</td>
-						<td>{{ $equipment->category }}</td>
-						<td>{{ $equipment->quantity }}</td>
-						<td><a class="btn btn-primary" href="/equipments/{{ $equipment->id }}/edit" data-toggle="modal" data-target="#editModal">Edit</a></td>
-						<td><a href="/equipments/{{ $equipment->id }}/edit">Edit</a></td>
+						<td><?php echo e($equipment->id); ?></td>
+						<td><?php echo e($equipment->name); ?></td>
+						<td><?php echo e($equipment->category); ?></td>
+						<td><?php echo e($equipment->quantity); ?></td>
+						<td><a class="btn btn-primary" href="/equipments/<?php echo e($equipment->id); ?>/edit" data-toggle="modal" data-target="#editModal">Edit</a></td>
+						<td><a href="/equipments/<?php echo e($equipment->id); ?>/edit">Edit</a></td>
+
 					</tr>
-				@endforeach
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>			
 		</table>
 			
@@ -44,15 +44,15 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form method="POST" action="/equipments/store">
-		@csrf
+		<?php echo csrf_field(); ?>
 		  <div class="form-group">
 		    <input type="text" class="form-control" name='name'  placeholder="Item Name">
 		    <br>
 		    <select class="custom-select custom-select-lg mb-3" name ="category"> 
-		    	@foreach ($equipments_category as $equipments_category)
-		    	<option class="option"  value='{{ $equipments_category->name }} '>
-		    		{{ $equipments_category->name }}</option>
-		    	@endforeach
+		    	<?php $__currentLoopData = $equipments_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $equipments_category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		    	<option class="option"  value='<?php echo e($equipments_category->name); ?> '>
+		    		<?php echo e($equipments_category->name); ?></option>
+		    	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		    </select>
 		    <input type="text" class="form-control" name='quantity' v-model='quantity'  placeholder="Quantity">
 		  </div>
@@ -82,7 +82,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form method="POST" action="/equipments/store">
-		@csrf
+		<?php echo csrf_field(); ?>
 		  <div class="form-group">
 		    <input type="text" class="form-control" name='name'  placeholder="Item Name">
 		    <br>
@@ -103,7 +103,7 @@
       </div>
     </div>
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -118,3 +118,4 @@
     })
 </script>
 </body>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ITE19-3C-2\Desktop\inventory\resources\views/equipments/index.blade.php ENDPATH**/ ?>
